@@ -1,9 +1,27 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from './store/store';
+import { logout } from './store/slices/authSlice';
+import LoginForm from './components/LoginForm';
+import { isAuthenticated, removeToken } from './utils/auth';
+import Header from './components/Header';
+import ImageSlider from './components/ImageSlider';
+
+const HomePage = () => {
+  const auth = useSelector((state: RootState) => state.auth);
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      hello world
+    <div>
+     {/* <Header/> */}
+      {isAuthenticated() ? (
+        <div>
+          <ImageSlider/>
+        </div>
+      ) : (
+        <LoginForm/>
+      )}
     </div>
   );
-}
+};
+
+export default HomePage;
